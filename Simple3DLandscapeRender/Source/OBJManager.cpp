@@ -16,6 +16,22 @@ OBJManager::~OBJManager()
 {
 }
 
+int checkVertexInArray(std::vector<objl::Vertex>& p_vertexVector, objl::Vertex& p_targetVertex)
+{
+	int vectorSize = p_vertexVector.size();
+	for (int i = 0; i < vectorSize; i++)
+	{
+		if (p_vertexVector.at(i).Position.X == p_targetVertex.Position.X && 
+			p_vertexVector.at(i).Position.Y == p_targetVertex.Position.Y &&
+			p_vertexVector.at(i).Position.Z == p_targetVertex.Position.Z)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 {
     RawModel* newRawModel = new RawModel();
@@ -24,7 +40,7 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 
 	// get the vertices and color and texture coordinates
 	std::vector<float> vertexArray;
-	std::vector<std::string> recordedData;
+	std::vector<objl::Vertex> recordedVertices;
 	
 	std::vector<unsigned int> indices;
 
@@ -34,6 +50,13 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 	{
 		for (int i = 0; i < mesh.Vertices.size(); i++)
 		{
+			int vertexIndex = checkVertexInArray(recordedVertices, mesh.Vertices.at(i));
+			if (vertexIndex != -1)
+			{
+				indices.push_back(vertexIndex);
+				continue;
+			}
+			
 			// position
 			vertexArray.push_back(mesh.Vertices.at(i).Position.X);
 			vertexArray.push_back(mesh.Vertices.at(i).Position.Y);
@@ -48,14 +71,12 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.X);
 			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.Y);
 
-			indices.push_back(static_cast<unsigned int>(counter));
+			recordedVertices.push_back(mesh.Vertices.at(i));
 
+			indices.push_back(static_cast<unsigned int>(counter));
 			counter++;
 		}
 	}
-
-	// clean up the index to remove duplicates
-
 	
 	newRawModel->addVertexAttr(vertexArray.data(), vertexArray.size());
 	newRawModel->bindIndexBuffer(indices.data(), indices.size());

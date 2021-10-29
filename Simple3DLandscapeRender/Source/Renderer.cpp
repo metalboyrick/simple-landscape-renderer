@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Common.h"
 
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -30,7 +31,7 @@ void Renderer::drawRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix, Shader
 
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = p_viewMatrix;
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
 
 	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
@@ -57,7 +58,7 @@ void Renderer::drawRotatingRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix
 	//model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
 
 	glm::mat4 view = p_viewMatrix;
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
 
 	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
@@ -79,7 +80,7 @@ void Renderer::drawSkybox(Skybox& p_skybox, glm::mat4 p_viewMatrix, ShaderProgra
 
 	// double cast to remove last dimension (prevent translation)
 	glm::mat4 view = glm::mat4(glm::mat3(p_viewMatrix));
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
 
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));

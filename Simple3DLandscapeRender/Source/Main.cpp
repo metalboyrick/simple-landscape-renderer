@@ -198,11 +198,12 @@ int main(void)
 	bool firstMouse = true;
 
 	// test for model imports
-	RawModel* cube = OBJManager::getRawModelFromObj("Resource/Model/SampleCube/cube.obj");
-	RawModel* island = OBJManager::getRawModelFromObj("Resource/Model/IslandBase/island_base.obj");
-	RawModel* building = OBJManager::getRawModelFromObj("Resource/Model/Building/building.obj");
-	RawModel* windmill = OBJManager::getRawModelFromObj("Resource/Model/Windmill/windmill3.obj");
-	RawModel* tree = OBJManager::getRawModelFromObj("Resource/Model/Tree/tree.obj");
+	//RawModel* cube = OBJManager::getRawModelFromObj("Resource/Model/SampleCube/cube.obj");
+	//RawModel* island = OBJManager::getRawModelFromObj("Resource/Model/IslandBase/island_base.obj");
+	//RawModel* building = OBJManager::getRawModelFromObj("Resource/Model/Building/building.obj");
+	//RawModel* windmill = OBJManager::getRawModelFromObj("Resource/Model/Windmill/windmill3.obj");
+	//RawModel* tree = OBJManager::getRawModelFromObj("Resource/Model/Tree/tree.obj");
+	RawModel* dragon = OBJManager::getRawModelFromObj("Resource/Model/Dragon/dragon.obj");
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -236,10 +237,12 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingRawModel(*windmill, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*tree, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*building, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*island, viewMatrix, shaderProgram);
+			//renderer.drawRotatingRawModel(*windmill, viewMatrix, shaderProgram);
+			//renderer.drawRawModel(*tree, viewMatrix, shaderProgram);
+			//renderer.drawRawModel(*building, viewMatrix, shaderProgram);
+			//renderer.drawRawModel(*island, viewMatrix, shaderProgram);
+			renderer.drawRawModel(*dragon, viewMatrix, shaderProgram);
+			//renderer.drawRawModel(*cube, viewMatrix, shaderProgram);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}
@@ -264,11 +267,12 @@ int main(void)
 	}
 
 	// cleanups
-	delete island;
-	delete building;
-	delete windmill;
-	delete tree;
-	delete cube;
+	//delete island;
+	//delete building;
+	//delete windmill;
+	//delete tree;
+	//delete cube;
+	delete dragon;
 
 	glfwTerminate();
 	return 0;
