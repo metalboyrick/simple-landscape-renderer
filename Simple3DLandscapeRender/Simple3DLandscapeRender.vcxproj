@@ -159,7 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\OBJManager.cpp" />
     <ClCompile Include="Source\Skybox.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -323,7 +323,7 @@
     <None Include="Source\Vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\OBJManager.h" />
     <ClInclude Include="Source\Skybox.h" />
     <ClInclude Include="Source\Camera.h" />

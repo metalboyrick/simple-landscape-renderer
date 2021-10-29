@@ -63,7 +63,7 @@
     <ClCompile Include="Source\Vendor\pystring\pystring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
+    <ClCompile Include="Source\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1403,7 +1403,7 @@
     <ClInclude Include="Source\Vendor\pystring\pystring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
+    <ClInclude Include="Source\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
