@@ -53,56 +53,8 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 			counter++;
 		}
 	}
-	
-	
-	// get the index array
-	
-	//std::vector<std::string> appendedEntries;
-	//std::fstream inFile;
-	//inFile.open(p_filepath, std::ios::out | std::ios::in);
-	//std::string line;
-	//unsigned int indexCounter = 0;
-	//
-	//while (getline(inFile, line))
-	//{
-	//	// only want the indices
-	//	if (line[0] != 'f')
-	//		continue;
-	//	
-	//	std::vector<std::string> indexCollections;
-	//	pystring::split(line, indexCollections);
-	//	
-	//	for (int i = 1; i < 4; i++)
-	//	{
-	//		unsigned int index = -1;
-	//		
-	//		// find index
-	//		auto it = std::find(appendedEntries.begin(), appendedEntries.end(), indexCollections.at(i));
 
-	//		// If element was found
-	//		if (it != appendedEntries.end())
-	//		{
-	//			index = it - appendedEntries.begin();
-	//			indices.push_back(index);
-	//			continue;
-	//		}
-	//		else {
-	//			index = -1;
-	//			appendedEntries.push_back(indexCollections.at(i));
-	//			indices.push_back(indexCounter);
-	//			indexCounter += 1;
-	//		}
-	//		
-	//		//std::vector<std::string> triangleIndices;
-	//		//pystring::split(indexCollections.at(i), triangleIndices, "/");
-	//		//
-	//		//for (int j = 0; j < 3; j++) {
-	//		//	unsigned long index = std::stoul(triangleIndices[j]);
-	//		//	indices.push_back(static_cast<unsigned int>(index - 1));
-	//		//}
-	//	}
-	//	
-	//}
+	// clean up the index to remove duplicates
 
 	
 	newRawModel->addVertexAttr(vertexArray.data(), vertexArray.size());

@@ -9,6 +9,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
 
+#include "Common.h"
 #include "RawModel.h"
 #include "Camera.h"
 #include "Renderer.h"
@@ -140,7 +141,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Simple 3D Scene Renderer", NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Simple 3D Scene Renderer", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -191,8 +192,8 @@ int main(void)
 	//glfwSetCursorPosCallback(window, mouseCallback);
 	double offsetX = 0;
 	double offsetY = 0;
-	double lastX = 320;
-	double lastY = 240;
+	double lastX = WINDOW_WIDTH / 2;
+	double lastY = WINDOW_HEIGHT / 2;
 	double xpos = 0, ypos = 0;
 	bool firstMouse = true;
 
@@ -247,7 +248,7 @@ int main(void)
 		ImGui_ImplGlfwGL3_NewFrame();
 		{
 			ImGui::Begin("Status");
-			ImGui::SetWindowPos(ImVec2(ImGui::GetWindowWidth() - 50, ImGui::GetWindowHeight() - 60));
+			ImGui::SetWindowPos(ImVec2(ImGui::GetWindowWidth() - 340, ImGui::GetWindowHeight() - 60));
 			ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
