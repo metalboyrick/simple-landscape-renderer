@@ -10,7 +10,7 @@
 #include <imgui/imgui_impl_glfw_gl3.h>
 
 #include "Common.h"
-#include "RawModel.h"
+#include "Model.h"
 #include "Camera.h"
 #include "Renderer.h"
 #include "ShaderProgram.h"
@@ -198,12 +198,12 @@ int main(void)
 	bool firstMouse = true;
 
 	// test for model imports
-	//RawModel* cube = OBJManager::getRawModelFromObj("Resource/Model/SampleCube/cube.obj");
-	RawModel* island = OBJManager::getRawModelFromObj("Resource/Model/IslandBase/island_base.obj");
-	RawModel* building = OBJManager::getRawModelFromObj("Resource/Model/Building/building.obj");
-	RawModel* windmill = OBJManager::getRawModelFromObj("Resource/Model/Windmill/windmill3.obj");
-	RawModel* tree = OBJManager::getRawModelFromObj("Resource/Model/Tree/tree.obj");
-	//RawModel* dragon = OBJManager::getRawModelFromObj("Resource/Model/Dragon/dragon.obj");
+	//Model* cube = OBJManager::getModelFromObj("Resource/Model/SampleCube/cube.obj");
+	Model* island = OBJManager::getModelFromObj("Resource/Model/IslandBase/island_base.obj");
+	Model* building = OBJManager::getModelFromObj("Resource/Model/Building/building.obj");
+	Model* windmill = OBJManager::getModelFromObj("Resource/Model/Windmill/windmill3.obj");
+	Model* tree = OBJManager::getModelFromObj("Resource/Model/Tree/tree.obj");
+	//Model* dragon = OBJManager::getModelFromObj("Resource/Model/Dragon/dragon.obj");
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -237,11 +237,11 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingRawModel(*windmill, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*tree, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*building, viewMatrix, shaderProgram);
-			renderer.drawRawModel(*island, viewMatrix, shaderProgram);
-			//renderer.drawRawModel(*cube, viewMatrix, shaderProgram);
+			renderer.drawRotatingModel(*windmill, viewMatrix, shaderProgram);
+			renderer.drawModel(*tree, viewMatrix, shaderProgram);
+			renderer.drawModel(*building, viewMatrix, shaderProgram);
+			renderer.drawModel(*island, viewMatrix, shaderProgram);
+			//renderer.drawModel(*cube, viewMatrix, shaderProgram);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}

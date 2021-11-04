@@ -1,15 +1,15 @@
-#include "RawModel.h"
+#include "Model.h"
 
 #include <GL/glew.h>
 
-RawModel::RawModel() : m_vertexCount(0), m_indexCount(0)
+Model::Model() : m_vertexCount(0), m_indexCount(0)
 {
 	glGenVertexArrays(1, &m_id);
 	glBindVertexArray(m_id);
 	m_texture = nullptr;
 }
 
-RawModel::~RawModel()
+Model::~Model()
 {
 	if (m_texture) delete m_texture;
 
@@ -22,7 +22,7 @@ RawModel::~RawModel()
 	glDeleteVertexArrays(1, &m_id);
 }
 
-void RawModel::bind() const
+void Model::bind() const
 {
 	glBindVertexArray(m_id);
 	if (m_texture)
@@ -30,7 +30,7 @@ void RawModel::bind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iBufferIDs[0]);
 }
 
-void RawModel::unbind() const
+void Model::unbind() const
 {
 	glBindVertexArray(0);
 	if(m_texture)
@@ -38,7 +38,7 @@ void RawModel::unbind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void RawModel::bindIndexBuffer(unsigned int* p_indices, unsigned int p_iCount)
+void Model::bindIndexBuffer(unsigned int* p_indices, unsigned int p_iCount)
 {
 	// create ibo + bind
 	unsigned int ibo;
@@ -52,7 +52,7 @@ void RawModel::bindIndexBuffer(unsigned int* p_indices, unsigned int p_iCount)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void RawModel::addVertexAttr(float* p_vertices, unsigned int p_vSize, const std::string& p_texturePath)
+void Model::addVertexAttr(float* p_vertices, unsigned int p_vSize, const std::string& p_texturePath)
 {
 	// bind vertex array
 	glBindVertexArray(m_id);
@@ -86,7 +86,7 @@ void RawModel::addVertexAttr(float* p_vertices, unsigned int p_vSize, const std:
 	glBindVertexArray(0);
 }
 
-void RawModel::addVertexAttr(float* p_vertices, unsigned int p_vSize)
+void Model::addVertexAttr(float* p_vertices, unsigned int p_vSize)
 {
 	// bind vertex array
 	glBindVertexArray(m_id);

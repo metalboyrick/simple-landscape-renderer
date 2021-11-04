@@ -25,7 +25,7 @@ void Renderer::prepare() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::drawRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
+void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
 {
 	p_shader.start();
 
@@ -38,14 +38,14 @@ void Renderer::drawRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix, Shader
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
 
 
-	p_rawModel.bind();
+	p_Model.bind();
 	p_shader.setUniform1i("f_uni_texture", 0);
-	glDrawElements(GL_TRIANGLES, p_rawModel.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
-	p_rawModel.unbind();
+	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
+	p_Model.unbind();
 	p_shader.stop();
 }
 
-void Renderer::drawRotatingRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
+void Renderer::drawRotatingModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
 {
 	p_shader.start();
 	
@@ -65,10 +65,10 @@ void Renderer::drawRotatingRawModel(RawModel& p_rawModel, glm::mat4 p_viewMatrix
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
 
 
-	p_rawModel.bind();
+	p_Model.bind();
 	p_shader.setUniform1i("f_uni_texture", 0);
-	glDrawElements(GL_TRIANGLES, p_rawModel.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
-	p_rawModel.unbind();
+	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
+	p_Model.unbind();
 	p_shader.stop();
 }
 

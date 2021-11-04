@@ -166,7 +166,7 @@
     <ClCompile Include="Source\Common.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
-    <ClCompile Include="Source\RawModel.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Vendor\glm\detail\glm.cpp" />
     <ClCompile Include="Source\Vendor\imgui\imgui.cpp" />
@@ -330,7 +330,7 @@
     <ClInclude Include="Source\Common.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Renderer.h" />
-    <ClInclude Include="Source\RawModel.h" />
+    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Vendor\glm\common.hpp" />
     <ClInclude Include="Source\Vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="Source\Vendor\glm\detail\compute_vector_relational.hpp" />

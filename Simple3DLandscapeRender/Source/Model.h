@@ -3,7 +3,7 @@
 #include <vector>
 #include "Texture.h"
 
-class RawModel
+class Model
 {
 private:
 	unsigned int m_id;
@@ -14,8 +14,8 @@ private:
 	Texture* m_texture;
 
 public:
-	RawModel();
-	~RawModel();
+	Model();
+	~Model();
 
 	inline unsigned int getId() const { return m_id; };
 	inline unsigned int getVertexCount() const { return m_vertexCount; };

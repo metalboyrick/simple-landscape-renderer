@@ -1,16 +1,16 @@
 #pragma once
 
-#include "RawModel.h"
+#include "Model.h"
 #include <string>
 
-/* This class converts obj to RawModel*/
+/* This class converts obj to Model*/
 class OBJManager
 {
 public:
 	OBJManager();
 	~OBJManager();
 
-	static RawModel* getRawModelFromObj(const std::string& p_filepath);
+	static Model* getModelFromObj(const std::string& p_filepath);
 
 };
 

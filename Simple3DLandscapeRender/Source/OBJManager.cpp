@@ -32,9 +32,9 @@ int checkVertexInArray(std::vector<objl::Vertex>& p_vertexVector, objl::Vertex& 
 	return -1;
 }
 
-RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
+Model* OBJManager::getModelFromObj(const std::string& p_filepath)
 {
-    RawModel* newRawModel = new RawModel();
+    Model* newModel = new Model();
     objl::Loader loader;
     loader.LoadFile(p_filepath);
 
@@ -72,8 +72,8 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 		}
 	}
 	
-	newRawModel->addVertexAttr(vertexArray.data(), vertexArray.size());
-	newRawModel->bindIndexBuffer(indices.data(), indices.size());
+	newModel->addVertexAttr(vertexArray.data(), vertexArray.size());
+	newModel->bindIndexBuffer(indices.data(), indices.size());
 
-    return  newRawModel;
+    return  newModel;
 }
