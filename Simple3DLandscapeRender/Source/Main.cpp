@@ -15,6 +15,7 @@
 #include "Renderer.h"
 #include "ShaderProgram.h"
 #include "OBJManager.h"
+#include "Light.h"
 
 void APIENTRY GLDebugMessageCallback(GLenum source, GLenum type, GLuint id,
 	GLenum severity, GLsizei length,
@@ -182,6 +183,7 @@ int main(void)
 	Camera camera;
 
 	Skybox skybox;
+	Light lightSource(-100.0f,100.0f,-10.0f,1.0f,1.0f,1.0f);
 
 	// helper variables for motion
 	float deltaTime = 0.0f;	// Time between current frame and last frame
@@ -237,11 +239,11 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingModel(*windmill, viewMatrix, shaderProgram);
-			renderer.drawModel(*tree, viewMatrix, shaderProgram);
-			renderer.drawModel(*building, viewMatrix, shaderProgram);
-			renderer.drawModel(*island, viewMatrix, shaderProgram);
-			//renderer.drawModel(*cube, viewMatrix, shaderProgram);
+			renderer.drawRotatingModel(*windmill, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(*tree, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(*building, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(*island, viewMatrix, shaderProgram, lightSource);
+			//renderer.drawModel(*cube, viewMatrix, shaderProgram, lightSource);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}

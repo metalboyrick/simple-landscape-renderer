@@ -13,6 +13,7 @@ public:
 
 	void start() const;
 	void stop() const;
+	void setUniform3fv(const std::string& p_name, float* p_vec) const;
 	void setUniform4f(const std::string& p_name, float p_x, float p_y, float p_z, float p_a) const;
 	void setUniform1i(const std::string& p_name, int p_param);
 	void setUniformMatrix4fv(const std::string& p_name, bool p_isTranspose, float* p_matrix);

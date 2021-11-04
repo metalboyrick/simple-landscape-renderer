@@ -25,7 +25,7 @@ void Renderer::prepare() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
+void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Light& p_light) const
 {
 	p_shader.start();
 
@@ -37,15 +37,21 @@ void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& 
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
 
+	// setup lighting
+	glm::vec3 lightPos = p_light.getPosition();
+	glm::vec3 lightColor = p_light.getColor();
+	p_shader.setUniform3fv("v_uni_lightPosition", glm::value_ptr(lightPos));
+	p_shader.setUniform3fv("f_uni_lightColor", glm::value_ptr(lightColor));
 
 	p_Model.bind();
 	p_shader.setUniform1i("f_uni_texture", 0);
 	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
 	p_Model.unbind();
+	
 	p_shader.stop();
 }
 
-void Renderer::drawRotatingModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader) const
+void Renderer::drawRotatingModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Light& p_light) const
 {
 	p_shader.start();
 	
@@ -64,11 +70,18 @@ void Renderer::drawRotatingModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderP
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
 
+	// setup lighting
+	glm::vec3 lightPos = p_light.getPosition();
+	glm::vec3 lightColor = p_light.getColor();
+	p_shader.setUniform3fv("v_uni_lightPosition", glm::value_ptr(lightPos));
+	p_shader.setUniform3fv("f_uni_lightColor", glm::value_ptr(lightColor));
 
 	p_Model.bind();
 	p_shader.setUniform1i("f_uni_texture", 0);
 	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
 	p_Model.unbind();
+
+
 	p_shader.stop();
 }
 

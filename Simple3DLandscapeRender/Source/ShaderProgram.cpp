@@ -45,6 +45,15 @@ void ShaderProgram::stop() const
 	glUseProgram(0);
 }
 
+void ShaderProgram::setUniform3fv(const std::string& p_name, float* p_vec) const
+{
+	int uniformLocation = glGetUniformLocation(m_id, p_name.c_str());
+	if (uniformLocation > -1)
+	{
+		glUniform3fv(uniformLocation, 1, p_vec);
+	}
+}
+
 void ShaderProgram::setUniform1i(const std::string& p_name, int p_param)
 {
 	int uniformLocation = glGetUniformLocation(m_id, p_name.c_str());

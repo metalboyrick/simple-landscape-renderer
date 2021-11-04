@@ -9,14 +9,24 @@ layout(location = 3) in vec3 v_in_normal;
 
 out vec2 v_out_textureCoordinate;
 out vec3 v_out_color;
+out vec3 v_out_surfaceNormal;
+out vec3 v_out_toLightVector;
 
 uniform mat4 v_uni_model;
 uniform mat4 v_uni_view;
 uniform mat4 v_uni_projection;
+uniform vec3 v_uni_lightPosition;
 
 void main()
 {
-	gl_Position = v_uni_projection * v_uni_view * v_uni_model * vec4(v_in_position, 1.0);
+	// general object position in world coordinates
+	vec4 worldPosition = v_uni_model * vec4(v_in_position, 1.0);
+	
+	gl_Position = v_uni_projection * v_uni_view * worldPosition;
 	v_out_textureCoordinate = v_in_textureCoordinate;
 	v_out_color = v_in_color;
+
+	// compute net surface normal
+	v_out_surfaceNormal = (v_uni_model * vec4(v_in_normal, 1.0)).xyz;
+	v_out_toLightVector = v_uni_lightPosition - worldPosition.xyz;
 }
