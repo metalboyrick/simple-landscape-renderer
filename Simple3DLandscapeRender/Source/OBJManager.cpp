@@ -40,8 +40,6 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 
 	// get the vertices and color and texture coordinates
 	std::vector<float> vertexArray;
-	std::vector<objl::Vertex> recordedVertices;
-	
 	std::vector<unsigned int> indices;
 
 	unsigned int counter = 0;
@@ -50,13 +48,6 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 	{
 		for (int i = 0; i < mesh.Vertices.size(); i++)
 		{
-			int vertexIndex = checkVertexInArray(recordedVertices, mesh.Vertices.at(i));
-			if (vertexIndex != -1)
-			{
-				indices.push_back(vertexIndex);
-				continue;
-			}
-			
 			// position
 			vertexArray.push_back(mesh.Vertices.at(i).Position.X);
 			vertexArray.push_back(mesh.Vertices.at(i).Position.Y);
@@ -71,7 +62,10 @@ RawModel* OBJManager::getRawModelFromObj(const std::string& p_filepath)
 			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.X);
 			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.Y);
 
-			recordedVertices.push_back(mesh.Vertices.at(i));
+			// normal
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.X);
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.Y);
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.Z);
 
 			indices.push_back(static_cast<unsigned int>(counter));
 			counter++;

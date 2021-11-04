@@ -5,6 +5,7 @@
 layout(location = 0) in vec3 v_in_position;
 layout(location = 1) in vec3 v_in_color;
 layout(location = 2) in vec2 v_in_textureCoordinate;
+layout(location = 3) in vec3 v_in_normal;
 
 out vec2 v_out_textureCoordinate;
 out vec3 v_out_color;
