@@ -65,8 +65,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\Shaders\Vertex.shader" />
-    <None Include="Resource\Shaders\Fragment.shader" />
+    <None Include="Resource\Shaders\DiffuseVertex.shader" />
+    <None Include="Resource\Shaders\DiffuseFragment.shader" />
     <None Include="Source\Vendor\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -486,6 +486,8 @@
     </None>
     <None Include="Resource\Shaders\SkyboxVertex.shader" />
     <None Include="Resource\Shaders\SkyboxFragment.shader" />
+    <None Include="Resource\Shaders\BlinnPhongVertex.shader" />
+    <None Include="Resource\Shaders\BlinnPhongFragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Model.h">

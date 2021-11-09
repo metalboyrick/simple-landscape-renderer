@@ -179,6 +179,7 @@ int main(void)
 	
 	ShaderProgram diffuseShader("Resource/Shaders/DiffuseVertex.shader", "Resource/Shaders/DiffuseFragment.shader");
 	ShaderProgram skyboxShader("Resource/Shaders/SkyboxVertex.shader", "Resource/Shaders/SkyboxFragment.shader");
+	ShaderProgram blinnPhongShader("Resource/Shaders/BlinnPhongVertex.shader", "Resource/Shaders/BlinnPhongFragment.shader");
 	Camera camera;
 
 	Skybox skybox;
@@ -238,12 +239,12 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingModel(windmill, viewMatrix, diffuseShader, lightSource);
-			renderer.drawModel(tree, viewMatrix, diffuseShader, lightSource);
-			renderer.drawModel(building, viewMatrix, diffuseShader, lightSource);
-			renderer.drawModel(island, viewMatrix, diffuseShader, lightSource);
+			renderer.drawRotatingModel(windmill, viewMatrix, blinnPhongShader, lightSource);
+			renderer.drawModel(tree, viewMatrix, blinnPhongShader, lightSource);
+			renderer.drawModel(building, viewMatrix, blinnPhongShader, lightSource);
+			renderer.drawModel(island, viewMatrix, blinnPhongShader, lightSource);
 			//renderer.drawModel(cube, viewMatrix, diffuseShader, lightSource);
-			//renderer.drawModel(dragon, viewMatrix, diffuseShader, lightSource);
+			//renderer.drawModel(dragon, viewMatrix, blinnPhongShader, lightSource);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}

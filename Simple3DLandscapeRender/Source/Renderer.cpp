@@ -41,7 +41,9 @@ void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& 
 	glm::vec3 lightPos = p_light.getPosition();
 	glm::vec3 lightColor = p_light.getColor();
 	p_shader.setUniform3fv("v_uni_lightPosition", glm::value_ptr(lightPos));
+	p_shader.setUniformMatrix4fv("v_uni_viewMatrix", false,glm::value_ptr(p_viewMatrix));
 	p_shader.setUniform3fv("f_uni_lightColor", glm::value_ptr(lightColor));
+	p_shader.setUniform1i("f_uni_shineDamper", 15);
 
 	p_Model.bind();
 	p_shader.setUniform1i("f_uni_texture", 0);
