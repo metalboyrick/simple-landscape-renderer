@@ -14,7 +14,6 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "ShaderProgram.h"
-#include "OBJManager.h"
 #include "Light.h"
 
 void APIENTRY GLDebugMessageCallback(GLenum source, GLenum type, GLuint id,
@@ -200,12 +199,12 @@ int main(void)
 	bool firstMouse = true;
 
 	// test for model imports
-	//Model* cube = OBJManager::getModelFromObj("Resource/Model/SampleCube/cube.obj");
-	Model* island = OBJManager::getModelFromObj("Resource/Model/IslandBase/island_base.obj");
-	Model* building = OBJManager::getModelFromObj("Resource/Model/Building/building.obj");
-	Model* windmill = OBJManager::getModelFromObj("Resource/Model/Windmill/windmill3.obj");
-	Model* tree = OBJManager::getModelFromObj("Resource/Model/Tree/tree.obj");
-	//Model* dragon = OBJManager::getModelFromObj("Resource/Model/Dragon/dragon.obj");
+	//Model cube("Resource/Model/SampleCube/cube.obj");
+	Model island("Resource/Model/IslandBase/island_base.obj");
+	Model building("Resource/Model/Building/building.obj");
+	Model windmill("Resource/Model/Windmill/windmill3.obj");
+	Model tree("Resource/Model/Tree/tree.obj");
+	//Model dragon("Resource/Model/Dragon/dragon.obj");
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -239,11 +238,12 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingModel(*windmill, viewMatrix, shaderProgram, lightSource);
-			renderer.drawModel(*tree, viewMatrix, shaderProgram, lightSource);
-			renderer.drawModel(*building, viewMatrix, shaderProgram, lightSource);
-			renderer.drawModel(*island, viewMatrix, shaderProgram, lightSource);
-			//renderer.drawModel(*cube, viewMatrix, shaderProgram, lightSource);
+			renderer.drawRotatingModel(windmill, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(tree, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(building, viewMatrix, shaderProgram, lightSource);
+			renderer.drawModel(island, viewMatrix, shaderProgram, lightSource);
+			//renderer.drawModel(cube, viewMatrix, shaderProgram, lightSource);
+			//renderer.drawModel(dragon, viewMatrix, shaderProgram, lightSource);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}
@@ -266,14 +266,6 @@ int main(void)
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
-
-	// cleanups
-	delete island;
-	delete building;
-	delete windmill;
-	delete tree;
-	//delete cube;
-	//delete dragon;
 
 	glfwTerminate();
 	return 0;

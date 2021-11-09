@@ -57,9 +57,6 @@
     <ClCompile Include="Source\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\OBJManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vendor\pystring\pystring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1395,9 +1392,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vendor\OBJ_Loader\OBJ_Loader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\OBJManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vendor\pystring\pystring.h">

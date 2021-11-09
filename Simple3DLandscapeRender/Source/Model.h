@@ -15,6 +15,7 @@ private:
 
 public:
 	Model();
+	Model(const std::string& p_filepath);
 	~Model();
 
 	inline unsigned int getId() const { return m_id; };

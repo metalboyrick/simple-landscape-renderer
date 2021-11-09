@@ -94,6 +94,8 @@ std::string ShaderProgram::parseShader(const std::string& filename)
 		finalOutput += (line + "\n");
 	}
 
+	inFile.close();
+
 	return finalOutput;
 }
 

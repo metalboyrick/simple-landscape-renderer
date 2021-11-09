@@ -1,12 +1,67 @@
 #include "Model.h"
 
 #include <GL/glew.h>
+#include <OBJ_Loader/OBJ_Loader.h>
+#include <pystring/pystring.h>
+#include <fstream>
+#include <vector>
+#include <regex>
+#include <string>
+#include <algorithm>
 
 Model::Model() : m_vertexCount(0), m_indexCount(0)
 {
 	glGenVertexArrays(1, &m_id);
 	glBindVertexArray(m_id);
 	m_texture = nullptr;
+}
+
+Model::Model(const std::string& p_filepath)
+{
+	glGenVertexArrays(1, &m_id);
+	glBindVertexArray(m_id);
+	m_texture = nullptr;
+
+	// read from obj file
+	objl::Loader loader;
+	loader.LoadFile(p_filepath);
+
+	// get the vertices and color and texture coordinates
+	std::vector<float> vertexArray;
+	std::vector<unsigned int> indices;
+
+	unsigned int counter = 0;
+
+	for (auto& mesh : loader.LoadedMeshes)
+	{
+		for (int i = 0; i < mesh.Vertices.size(); i++)
+		{
+			// position
+			vertexArray.push_back(mesh.Vertices.at(i).Position.X);
+			vertexArray.push_back(mesh.Vertices.at(i).Position.Y);
+			vertexArray.push_back(mesh.Vertices.at(i).Position.Z);
+
+			// color
+			vertexArray.push_back(mesh.MeshMaterial.Kd.X);
+			vertexArray.push_back(mesh.MeshMaterial.Kd.Y);
+			vertexArray.push_back(mesh.MeshMaterial.Kd.Z);
+
+			// texture coordinates
+			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.X);
+			vertexArray.push_back(mesh.Vertices.at(i).TextureCoordinate.Y);
+
+			// normal
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.X);
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.Y);
+			vertexArray.push_back(mesh.Vertices.at(i).Normal.Z);
+
+			indices.push_back(static_cast<unsigned int>(counter));
+			counter++;
+		}
+	}
+
+	addVertexAttr(vertexArray.data(), vertexArray.size());
+	bindIndexBuffer(indices.data(), indices.size());
 }
 
 Model::~Model()
