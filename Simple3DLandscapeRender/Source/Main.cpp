@@ -205,12 +205,7 @@ int main(void)
 	bool isRightAfterClick = true;
 
 	// test for model imports
-	//Model cube("Resource/Model/SampleCube/cube.obj");
-	//Model island("Resource/Model/IslandBase/island_base.obj");
-	//Model building("Resource/Model/Building/building.obj");
-	//Model windmill("Resource/Model/Windmill/windmill3.obj");
-	//Model tree("Resource/Model/Tree/tree.obj");
-	Model dragon("Resource/Model/Dragon/dragon.obj");
+	Model bunny("Resource/Model/Bunny/bunny.obj");
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -256,12 +251,7 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			//renderer.drawRotatingModel(windmill, viewMatrix, blinnPhongShader, lightSource);
-			//renderer.drawModel(tree, viewMatrix, blinnPhongShader, lightSource);
-			//renderer.drawModel(building, viewMatrix, blinnPhongShader, lightSource);
-			//renderer.drawModel(island, viewMatrix, blinnPhongShader, lightSource);
-			//renderer.drawModel(cube, viewMatrix, diffuseShader, lightSource);
-			renderer.drawModel(dragon, viewMatrix, blinnPhongShader, lightSource);
+			renderer.drawModel(bunny, viewMatrix, blinnPhongShader, lightSource);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}
