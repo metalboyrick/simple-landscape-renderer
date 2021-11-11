@@ -62,6 +62,14 @@ void ShaderProgram::setUniform1i(const std::string& p_name, int p_param)
 		glUniform1i(uniformLocation, p_param);
 	}
 }
+void ShaderProgram::setUniform1f(const std::string& p_name, float p_param)
+{
+	int uniformLocation = glGetUniformLocation(m_id, p_name.c_str());
+	if (uniformLocation > -1)
+	{
+		glUniform1f(uniformLocation, p_param);
+	}
+}
 
 void ShaderProgram::setUniformMatrix4fv(const std::string& p_name, bool p_isTranspose, float* p_matrix)
 {

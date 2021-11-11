@@ -212,7 +212,7 @@ int main(void)
 	//Model bunny2("Bunny Mirror", "Resource/Model/Bunny/bunny.obj");
 	models.push_back(new Model("Bunny Glass", "Resource/Model/Bunny/bunny.obj"));
 	models.push_back(new Model("Bunny Mirror", "Resource/Model/Bunny/bunny.obj"));
-	models.push_back(new Model("Red Cube", "Resource/Model/SampleCube/cube.obj"));
+	//models.push_back(new Model("Red Cube", "Resource/Model/SampleCube/cube.obj"));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))

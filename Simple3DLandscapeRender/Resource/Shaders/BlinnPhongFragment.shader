@@ -13,6 +13,7 @@ uniform vec4 f_uni_color;
 uniform vec3 f_uni_lightColor;
 uniform int f_uni_shineDamper;
 uniform sampler2D f_uni_texture;
+uniform float f_uni_ambient;
 
 void main()
 {
@@ -24,20 +25,19 @@ void main()
 	// prevent values lower than 0
 	float brightness = max(dotProd, 0);
 	vec3 diffuseColor = brightness * f_uni_lightColor;
-	
 
-
-	// specular 
+	// specular (blinnphong)
 	vec3 unitFromLightVector = -1 * unitToLightVector;
 	vec3 unitToViewVector = normalize(v_out_toViewVector);
 	vec3 reflectedNormal = reflect(unitFromLightVector, unitSurfaceNormal);
 
-	float specularFactor = dot(reflectedNormal, unitToViewVector);
+	// blinnphong
+	vec3 halfwayVector = normalize(-1 * unitFromLightVector + unitToViewVector);
 
+	float specularFactor = dot(unitSurfaceNormal, halfwayVector);
 	specularFactor = max(specularFactor, 0.0);
 	vec3 specularColor =  pow(specularFactor, f_uni_shineDamper) * f_uni_lightColor;
 
-
 	//combine
-	f_out_color = (vec4(diffuseColor, 1.0) * vec4(v_out_color, 1.0)) + vec4(specularColor, 1.0);
+	f_out_color = ((vec4(diffuseColor, 1.0) + f_uni_ambient) * vec4(v_out_color, 1.0)) + vec4(specularColor, 1.0);
 }
