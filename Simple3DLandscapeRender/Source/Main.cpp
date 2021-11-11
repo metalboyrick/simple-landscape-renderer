@@ -16,6 +16,8 @@
 #include "ShaderProgram.h"
 #include "Light.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 void APIENTRY GLDebugMessageCallback(GLenum source, GLenum type, GLuint id,
 	GLenum severity, GLsizei length,
 	const GLchar* msg, const void* data)
@@ -167,7 +169,7 @@ int main(void)
 	glDebugMessageCallback(GLDebugMessageCallback, NULL);
 
 	// fix mouse cursor to the middle
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	// Setup ImGui binding
 	ImGui::CreateContext();
@@ -198,53 +200,68 @@ int main(void)
 	double lastY = WINDOW_HEIGHT / 2;
 	double xpos = 0, ypos = 0;
 	bool firstMouse = true;
+	bool isLeftClick = false;
+	bool isRightClick = true;
+	bool isRightAfterClick = true;
 
 	// test for model imports
 	//Model cube("Resource/Model/SampleCube/cube.obj");
-	Model island("Resource/Model/IslandBase/island_base.obj");
-	Model building("Resource/Model/Building/building.obj");
-	Model windmill("Resource/Model/Windmill/windmill3.obj");
-	Model tree("Resource/Model/Tree/tree.obj");
-	//Model dragon("Resource/Model/Dragon/dragon.obj");
+	//Model island("Resource/Model/IslandBase/island_base.obj");
+	//Model building("Resource/Model/Building/building.obj");
+	//Model windmill("Resource/Model/Windmill/windmill3.obj");
+	//Model tree("Resource/Model/Tree/tree.obj");
+	Model dragon("Resource/Model/Dragon/dragon.obj");
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		// mouse camera adjustment
-		glfwGetCursorPos(window, &xpos, &ypos);
-		if (firstMouse)
+		isRightClick = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+		if (isRightClick == GLFW_PRESS)
 		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwGetCursorPos(window, &xpos, &ypos);
+			if (firstMouse)
+			{
+				lastX = xpos;
+				lastY = ypos;
+				firstMouse = false;
+			}
+
+			// compute camera looks
+			offsetX = xpos - lastX;
+			offsetY = lastY - ypos;
 			lastX = xpos;
 			lastY = ypos;
-			firstMouse = false;
+			camera.lookTo(offsetX, offsetY);
+
+			// compute delta for smooth movements in different machines
+			currentFrame = glfwGetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+			camera.setDelta(deltaTime);
+
+			// process the input and perform warping in the camera object
+			processInputCamera(window, camera);
+			
+		} 
+		else if (isRightClick == GLFW_RELEASE)
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			firstMouse = true;
 		}
-
-		// compute camera looks
-		offsetX = xpos - lastX;
-		offsetY = lastY - ypos;
-		lastX = xpos;
-		lastY = ypos;
-		camera.lookTo(offsetX, offsetY);
 		
-		// compute delta for smooth movements in different machines
-		currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		camera.setDelta(deltaTime);
-
-		// process the input and perform warping in the camera object
-		processInputCamera(window, camera);
 		
 		{
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawRotatingModel(windmill, viewMatrix, blinnPhongShader, lightSource);
-			renderer.drawModel(tree, viewMatrix, blinnPhongShader, lightSource);
-			renderer.drawModel(building, viewMatrix, blinnPhongShader, lightSource);
-			renderer.drawModel(island, viewMatrix, blinnPhongShader, lightSource);
+			//renderer.drawRotatingModel(windmill, viewMatrix, blinnPhongShader, lightSource);
+			//renderer.drawModel(tree, viewMatrix, blinnPhongShader, lightSource);
+			//renderer.drawModel(building, viewMatrix, blinnPhongShader, lightSource);
+			//renderer.drawModel(island, viewMatrix, blinnPhongShader, lightSource);
 			//renderer.drawModel(cube, viewMatrix, diffuseShader, lightSource);
-			//renderer.drawModel(dragon, viewMatrix, blinnPhongShader, lightSource);
+			renderer.drawModel(dragon, viewMatrix, blinnPhongShader, lightSource);
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}
@@ -253,9 +270,20 @@ int main(void)
 		ImGui_ImplGlfwGL3_NewFrame();
 		{
 			ImGui::Begin("Status");
-			ImGui::SetWindowPos(ImVec2(ImGui::GetWindowWidth() - 340, ImGui::GetWindowHeight() - 60));
-			ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("Controls\n------------------------------ ");
+			ImGui::Text("Hold right button to look around!");
+			ImGui::Text("WASD keys to move around");
+			ImGui::Text("%.1f FPS\n\n", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+			
+			ImGui::Text("Light Position");
+			ImGui::DragFloat("X", &lightSource.position[0], 0.1f);
+			ImGui::DragFloat("Y", &lightSource.position[1], 0.1f);
+			ImGui::DragFloat("Z", &lightSource.position[2], 0.1f);
+
+			ImGui::Text("Light Color");
+			ImGui::ColorEdit3("Pick Color", glm::value_ptr(lightSource.color));
+
 			ImGui::End();
 		}
 		ImGui::Render();
