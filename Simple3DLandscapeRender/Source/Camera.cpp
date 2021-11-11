@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
-Camera::Camera(): m_moveSpeed(0.8f), m_baseSpeed(1.0f), m_currentHRot(-90.0f), m_currentVRot(0.0f), m_sensitivity(0.1f)
+Camera::Camera(): m_moveSpeed(0.8f), m_baseSpeed(0.5f), m_currentHRot(-90.0f), m_currentVRot(0.0f), m_sensitivity(0.05f)
 {
 	m_cPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	m_cFront = glm::vec3(0.0f, 0.0f, -1.0f);

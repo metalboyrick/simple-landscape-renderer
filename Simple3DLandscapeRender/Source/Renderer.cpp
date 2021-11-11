@@ -29,7 +29,7 @@ void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& 
 {
 	p_shader.start();
 
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 model = p_Model.getModelTransform();
 	glm::mat4 view = p_viewMatrix;
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
 

@@ -8,6 +8,7 @@
 #include <regex>
 #include <string>
 #include <algorithm>
+#include <glm/ext/matrix_transform.hpp>
 
 Model::Model() : m_vertexCount(0), m_indexCount(0)
 {
@@ -16,8 +17,16 @@ Model::Model() : m_vertexCount(0), m_indexCount(0)
 	m_texture = nullptr;
 }
 
-Model::Model(const std::string& p_filepath)
+Model::Model(const std::string& p_name, const std::string& p_filepath)
 {
+	m_name = p_name;
+
+	// set all transform to identity
+	m_rotation = glm::mat4(1.0f);
+	m_translation = glm::mat4(1.0f);
+	m_rotInfo = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_trInfo = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	glGenVertexArrays(1, &m_id);
 	glBindVertexArray(m_id);
 	m_texture = nullptr;
@@ -171,5 +180,36 @@ void Model::addVertexAttr(float* p_vertices, unsigned int p_vSize)
 	// unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+}
+
+void Model::rotate(float p_yaw, float p_pitch, float p_roll)
+{
+	glm::mat4 rotPitch = glm::rotate(glm::mat4(1.0f), p_pitch, glm::vec3(1.0f, 0, 0));
+	glm::mat4 rotYaw = glm::rotate(glm::mat4(1.0f), p_yaw, glm::vec3(0, 1.0f, 0));
+	glm::mat4 rotRoll = glm::rotate(glm::mat4(1.0f), p_roll, glm::vec3(0, 0, 1.0f));
+
+	m_rotInfo = glm::vec3(p_yaw, p_pitch, p_roll);
+
+	m_rotation = rotYaw * rotPitch * rotRoll;
+}
+
+void Model::translate(float p_x, float p_y, float p_z)
+{
+	m_trInfo = glm::vec3(p_x, p_y, p_z);
+	m_translation = glm::translate(
+		glm::mat4(1.0f),
+		m_trInfo
+	);
+}
+
+glm::mat4 Model::getModelTransform()
+{
+	return m_translation * m_rotation;
+}
+
+void Model::clearTransform()
+{
+	m_rotation = glm::mat4(1.0f);
+	m_translation = glm::mat4(1.0f);
 }
 

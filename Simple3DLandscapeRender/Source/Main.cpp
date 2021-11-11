@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <string>
 #include <fstream>
+#include <vector>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
@@ -205,7 +206,13 @@ int main(void)
 	bool isRightAfterClick = true;
 
 	// test for model imports
-	Model bunny("Resource/Model/Bunny/bunny.obj");
+	std::vector<Model*> models;
+	//Model cube("Red Cube", "Resource/Model/SampleCube/cube.obj");
+	//Model bunny1("Bunny Glass", "Resource/Model/Bunny/bunny.obj");
+	//Model bunny2("Bunny Mirror", "Resource/Model/Bunny/bunny.obj");
+	models.push_back(new Model("Bunny Glass", "Resource/Model/Bunny/bunny.obj"));
+	models.push_back(new Model("Bunny Mirror", "Resource/Model/Bunny/bunny.obj"));
+	models.push_back(new Model("Red Cube", "Resource/Model/SampleCube/cube.obj"));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -251,7 +258,11 @@ int main(void)
 			renderer.prepare();
 			glm::mat4 viewMatrix = camera.getCameraTransform();
 
-			renderer.drawModel(bunny, viewMatrix, blinnPhongShader, lightSource);
+			for (auto pModel : models)
+			{
+				renderer.drawModel(*pModel, viewMatrix, blinnPhongShader, lightSource);
+			}
+				
 
 			renderer.drawSkybox(skybox, viewMatrix, skyboxShader);
 		}
@@ -263,16 +274,39 @@ int main(void)
 			ImGui::Text("Controls\n------------------------------ ");
 			ImGui::Text("Hold right button to look around!");
 			ImGui::Text("WASD keys to move around");
-			ImGui::Text("%.1f FPS\n\n", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("%.1f FPS", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 			
-			ImGui::Text("Light Position");
-			ImGui::DragFloat("X", &lightSource.position[0], 0.1f);
-			ImGui::DragFloat("Y", &lightSource.position[1], 0.1f);
-			ImGui::DragFloat("Z", &lightSource.position[2], 0.1f);
+			ImGui::Text("\n\nLight Position");
+			ImGui::DragFloat("X light", &lightSource.position[0], 0.1f);
+			ImGui::DragFloat("Y light", &lightSource.position[1], 0.1f);
+			ImGui::DragFloat("Z light", &lightSource.position[2], 0.1f);
 
 			ImGui::Text("Light Color");
 			ImGui::ColorEdit3("Pick Color", glm::value_ptr(lightSource.color));
+
+			ImGui::Text("\n\nModels");
+			for (auto& model : models)
+			{
+				if (ImGui::CollapsingHeader(model->getName().c_str()))
+				{
+					float rotYaw = model->getRot()[0], rotPitch = model->getRot()[1], rotRoll = model->getRot()[2];
+					float trX = model->getTranslation()[0], trY = model->getTranslation()[1], trZ = model->getTranslation()[2];
+					ImGui::Text("Rotate"); 
+					ImGui::DragFloat((model->getName() + "Yaw").c_str(), &rotYaw, 0.01f);
+					ImGui::DragFloat((model->getName() + "Pitch").c_str(), &rotPitch, 0.01f);
+					ImGui::DragFloat((model->getName() + "Roll").c_str(), &rotRoll, 0.01f);
+					ImGui::Text("Translate");
+					ImGui::DragFloat((model->getName() + "X").c_str(), &trX, 0.01f);
+					ImGui::DragFloat((model->getName() + "Y").c_str(), &trY, 0.01f);
+					ImGui::DragFloat((model->getName() + "Z").c_str(), &trZ, 0.01f);
+
+					model->rotate(rotYaw, rotPitch, rotRoll);
+					model->translate(trX, trY, trZ);
+				}
+
+			}
+				
 
 			ImGui::End();
 		}
@@ -284,6 +318,11 @@ int main(void)
 
 		/* Poll for and process events */
 		glfwPollEvents();
+	}
+
+	for (auto pModel : models)
+	{
+		delete pModel;
 	}
 
 	glfwTerminate();

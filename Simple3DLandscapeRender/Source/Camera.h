@@ -5,7 +5,7 @@
 #include <glm/ext/matrix_clip_space.hpp> // glm::perspective
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 
-const float CAMERA_SENSITIVITY = 0.1f;
+const float CAMERA_SENSITIVITY = 0.02f;
 
 class Camera
 {
