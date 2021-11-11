@@ -62,12 +62,12 @@ Skybox::Skybox()
 	// get all the skybox nets
 	std::string facesCubemap[6] =
 	{
-		"Resource/Skybox/px.png",
-		"Resource/Skybox/nx.png",
-		"Resource/Skybox/py.png",
-		"Resource/Skybox/ny.png",
-		"Resource/Skybox/pz.png",
-		"Resource/Skybox/nz.png"
+		"Resource/Skybox/posx.jpg",
+		"Resource/Skybox/negx.jpg",
+		"Resource/Skybox/posy.jpg",
+		"Resource/Skybox/negy.jpg",
+		"Resource/Skybox/posz.jpg",
+		"Resource/Skybox/negz.jpg"
 	};
 
 	glGenTextures(1, &m_texture);

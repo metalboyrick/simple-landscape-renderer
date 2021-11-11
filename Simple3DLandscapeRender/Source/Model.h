@@ -21,7 +21,7 @@ private:
 	glm::vec3 m_trInfo;
 
 public:
-	Model();
+	Model(const std::string& p_name);
 	Model(const std::string& p_name, const std::string& p_filepath);
 	~Model();
 

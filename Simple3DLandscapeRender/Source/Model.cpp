@@ -10,11 +10,19 @@
 #include <algorithm>
 #include <glm/ext/matrix_transform.hpp>
 
-Model::Model() : m_vertexCount(0), m_indexCount(0)
+Model::Model(const std::string& p_name) : m_vertexCount(0), m_indexCount(0)
 {
 	glGenVertexArrays(1, &m_id);
 	glBindVertexArray(m_id);
 	m_texture = nullptr;
+
+	m_name = p_name;
+
+	// set all transform to identity
+	m_rotation = glm::mat4(1.0f);
+	m_translation = glm::mat4(1.0f);
+	m_rotInfo = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_trInfo = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
 Model::Model(const std::string& p_name, const std::string& p_filepath)
