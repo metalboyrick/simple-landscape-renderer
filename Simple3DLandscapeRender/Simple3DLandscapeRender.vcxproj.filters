@@ -490,6 +490,8 @@
     <None Include="Resource\Shaders\BlinnPhongFragment.shader" />
     <None Include="Resource\Shaders\GlassVertex.shader" />
     <None Include="Resource\Shaders\GlassFragment.shader" />
+    <None Include="Resource\Shaders\MetallicVertex.shader" />
+    <None Include="Resource\Shaders\MetallicFragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Model.h">
