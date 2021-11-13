@@ -39,6 +39,7 @@ public:
 	inline void moveFront() { m_cPos += m_moveSpeed * m_cFront; };
 	inline void moveBack() { m_cPos -= m_moveSpeed * m_cFront; };
 	inline glm::vec3 getViewVector() { return m_cPos + m_cFront; };
+	inline glm::vec3 getPos() { return m_cPos; };
 
 	// look functions
 	void lookTo(float p_hRot, float p_vRot);

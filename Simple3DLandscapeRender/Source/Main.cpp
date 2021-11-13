@@ -142,6 +142,7 @@ int main(void)
 	
 	// enable debugging
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+	glfwWindowHint(GLFW_SAMPLES, GL_TRUE);
 
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Simple 3D Scene Renderer", NULL, NULL);
@@ -183,10 +184,13 @@ int main(void)
 	ShaderProgram diffuseShader("Resource/Shaders/DiffuseVertex.shader", "Resource/Shaders/DiffuseFragment.shader");
 	ShaderProgram skyboxShader("Resource/Shaders/SkyboxVertex.shader", "Resource/Shaders/SkyboxFragment.shader");
 	ShaderProgram blinnPhongShader("Resource/Shaders/BlinnPhongVertex.shader", "Resource/Shaders/BlinnPhongFragment.shader");
+	ShaderProgram glassShader("Resource/Shaders/GlassVertex.shader", "Resource/Shaders/GlassFragment.shader");
 	Camera camera;
 
 	Skybox skybox;
-	Light lightSource(-100.0f,100.0f,-10.0f,1.0f,1.0f,1.0f);
+	Light lightSource(
+		500.0f,0,-10,
+		1.0f,0.898f,0.682f);
 
 	// helper variables for motion
 	float deltaTime = 0.0f;	// Time between current frame and last frame
@@ -206,13 +210,16 @@ int main(void)
 	bool isRightAfterClick = true;
 
 	// test for model imports
+	// bunny texture : http://kunzhou.net/tex-models.htm
+	// iphone model : https://free3d.com/3d-model/iphone-12-pro-max-775081.html
 	std::vector<Model*> models;
 	//Model cube("Red Cube", "Resource/Model/SampleCube/cube.obj");
 	//Model bunny1("Bunny Glass", "Resource/Model/Bunny/bunny.obj");
 	//Model bunny2("Bunny Mirror", "Resource/Model/Bunny/bunny.obj");
 	models.push_back(new Model("Bunny Glass", "Resource/Model/Bunny/bunny.obj"));
 	models.push_back(new Model("Bunny Mirror", "Resource/Model/Bunny/bunny.obj"));
-	//models.push_back(new Model("Red Cube", "Resource/Model/SampleCube/cube.obj"));
+	//models.push_back(new Model("Face", "Resource/Model/Face/face.obj"));
+	//models.push_back(new Model("Teapot", "Resource/Model/Teapot/teapot.obj"));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -260,7 +267,8 @@ int main(void)
 
 			for (auto pModel : models)
 			{
-				renderer.drawModel(*pModel, viewMatrix, blinnPhongShader, lightSource);
+				//renderer.drawModel(*pModel, viewMatrix, glassShader, lightSource);
+				renderer.drawEM(*pModel, viewMatrix, glassShader, skybox);
 			}
 				
 

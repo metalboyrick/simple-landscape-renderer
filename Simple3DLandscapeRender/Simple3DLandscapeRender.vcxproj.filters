@@ -488,6 +488,8 @@
     <None Include="Resource\Shaders\SkyboxFragment.shader" />
     <None Include="Resource\Shaders\BlinnPhongVertex.shader" />
     <None Include="Resource\Shaders\BlinnPhongFragment.shader" />
+    <None Include="Resource\Shaders\GlassVertex.shader" />
+    <None Include="Resource\Shaders\GlassFragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Model.h">

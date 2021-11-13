@@ -180,6 +180,8 @@
     <None Include="Resource\Shaders\BlinnPhongFragment.shader" />
     <None Include="Resource\Shaders\BlinnPhongVertex.shader" />
     <None Include="Resource\Shaders\DiffuseFragment.shader" />
+    <None Include="Resource\Shaders\GlassFragment.shader" />
+    <None Include="Resource\Shaders\GlassVertex.shader" />
     <None Include="Resource\Shaders\SkyboxFragment.shader" />
     <None Include="Resource\Shaders\SkyboxVertex.shader" />
     <None Include="Resource\Shaders\DiffuseVertex.shader" />

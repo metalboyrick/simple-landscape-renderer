@@ -31,7 +31,7 @@ void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& 
 
 	glm::mat4 model = p_Model.getModelTransform();
 	glm::mat4 view = p_viewMatrix;
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 1000.0f);
 
 	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
@@ -51,42 +51,6 @@ void Renderer::drawModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& 
 	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
 	p_Model.unbind();
 	
-	p_shader.stop();
-}
-
-void Renderer::drawRotatingModel(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Light& p_light) const
-{
-	p_shader.start();
-	
-	glm::vec3 center(1.0, 0, 0);
-	glm::mat4 rot = glm::rotate(glm::mat4(1.0f), static_cast<float>(0.5f * glfwGetTime()), center);
-	glm::mat4 translate2 = glm::translate(glm::mat4(1.0f), glm::vec3(-0.05, 0.8f, -0.15f));
-	
-	glm::mat4 model = translate2 * rot;
-
-	//model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
-
-	glm::mat4 view = p_viewMatrix;
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 100.0f);
-
-	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
-	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
-	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
-
-	// setup lighting
-	glm::vec3 lightPos = p_light.position;
-	glm::vec3 lightColor = p_light.color;
-	p_shader.setUniform3fv("v_uni_lightPosition", glm::value_ptr(lightPos));
-	p_shader.setUniformMatrix4fv("v_uni_viewMatrix", false, glm::value_ptr(p_viewMatrix));
-	p_shader.setUniform3fv("f_uni_lightColor", glm::value_ptr(lightColor));
-	p_shader.setUniform1i("f_uni_shineDamper", 15);
-
-	p_Model.bind();
-	p_shader.setUniform1i("f_uni_texture", 0);
-	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
-	p_Model.unbind();
-
-
 	p_shader.stop();
 }
 
@@ -112,4 +76,26 @@ void Renderer::drawSkybox(Skybox& p_skybox, glm::mat4 p_viewMatrix, ShaderProgra
 	p_shader.stop();
 	//glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LESS);
+}
+
+void Renderer::drawEM(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Skybox& p_skybox) const
+{
+	p_shader.start();
+
+	glm::mat4 model = p_Model.getModelTransform();
+	glm::mat4 view = p_viewMatrix;
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT), 0.1f, 1000.0f);
+
+	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
+	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
+	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
+
+	p_skybox.bind();
+	p_Model.bind();
+	p_shader.setUniform1i("f_uni_texture", 1);
+	glDrawElements(GL_TRIANGLES, p_Model.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
+	p_Model.unbind();
+	p_skybox.unbind();
+
+	p_shader.stop();
 }
