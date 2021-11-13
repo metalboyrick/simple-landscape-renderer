@@ -10,13 +10,15 @@
 #include <algorithm>
 #include <glm/ext/matrix_transform.hpp>
 
-Model::Model(const std::string& p_name) : m_vertexCount(0), m_indexCount(0)
+Model::Model(const std::string& p_name, ShaderProgram* p_shader, bool p_isEM) : m_vertexCount(0), m_indexCount(0)
 {
 	glGenVertexArrays(1, &m_id);
 	glBindVertexArray(m_id);
 	m_texture = nullptr;
 
 	m_name = p_name;
+	m_shader = p_shader;
+	m_isEM = p_isEM;
 
 	// set all transform to identity
 	m_rotation = glm::mat4(1.0f);
@@ -25,9 +27,11 @@ Model::Model(const std::string& p_name) : m_vertexCount(0), m_indexCount(0)
 	m_trInfo = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
-Model::Model(const std::string& p_name, const std::string& p_filepath)
+Model::Model(const std::string& p_name, const std::string& p_filepath, ShaderProgram* p_shader, bool p_isEM)
 {
 	m_name = p_name;
+	m_shader = p_shader;
+	m_isEM = p_isEM;
 
 	// set all transform to identity
 	m_rotation = glm::mat4(1.0f);

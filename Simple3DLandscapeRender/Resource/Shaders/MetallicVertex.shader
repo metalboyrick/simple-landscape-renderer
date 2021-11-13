@@ -10,10 +10,12 @@ layout(location = 3) in vec3 v_in_normal;
 out vec3 v_out_surfaceNormal;
 out vec3 v_out_position;
 out vec3 v_out_toViewVector;
+out vec3 v_out_toLightVector;
 
 uniform mat4 v_uni_model;
 uniform mat4 v_uni_view;
 uniform mat4 v_uni_projection;
+uniform vec3 v_uni_lightPosition;
 
 void main()
 {
@@ -25,4 +27,5 @@ void main()
 	v_out_position = (v_uni_projection * v_uni_view * worldPosition).xyz;
 	v_out_surfaceNormal = (v_uni_model * vec4(v_in_normal, 1.0)).xyz;
 	v_out_toViewVector = (inverse(v_uni_view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldPosition.xyz;
+	v_out_toLightVector = v_uni_lightPosition - worldPosition.xyz;
 }
