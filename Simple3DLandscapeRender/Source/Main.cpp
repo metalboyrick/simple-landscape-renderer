@@ -185,12 +185,11 @@ int main(void)
 	ShaderProgram skyboxShader("Resource/Shaders/SkyboxVertex.shader", "Resource/Shaders/SkyboxFragment.shader");
 	ShaderProgram blinnPhongShader("Resource/Shaders/BlinnPhongVertex.shader", "Resource/Shaders/BlinnPhongFragment.shader");
 	ShaderProgram glassShader("Resource/Shaders/GlassVertex.shader", "Resource/Shaders/GlassFragment.shader");
-	ShaderProgram metallicShader("Resource/Shaders/MetallicVertex.shader", "Resource/Shaders/MetallicFragment.shader");
 	Camera camera;
 
 	Skybox skybox;
 	Light lightSource(
-		500.0f,0,0,
+		500.0f,0,-10,
 		1.0f,0.898f,0.682f);
 
 	// helper variables for motion
@@ -217,9 +216,8 @@ int main(void)
 	//Model cube("Red Cube", "Resource/Model/SampleCube/cube.obj");
 	//Model bunny1("Bunny Glass", "Resource/Model/Bunny/bunny.obj");
 	//Model bunny2("Bunny Mirror", "Resource/Model/Bunny/bunny.obj");
-	models.push_back(new Model("Bunny Glass", "Resource/Model/Bunny/bunny.obj", &glassShader, true));
-	models.push_back(new Model("Bunny Mirror", "Resource/Model/Bunny/bunny.obj", &metallicShader, true));
-	models.push_back(new Model("Bunny Regular", "Resource/Model/Bunny/bunny.obj", &blinnPhongShader, false));
+	models.push_back(new Model("Bunny Glass", "Resource/Model/Bunny/bunny.obj"));
+	models.push_back(new Model("Bunny Mirror", "Resource/Model/Bunny/bunny.obj"));
 	//models.push_back(new Model("Face", "Resource/Model/Face/face.obj"));
 	//models.push_back(new Model("Teapot", "Resource/Model/Teapot/teapot.obj"));
 
@@ -269,13 +267,8 @@ int main(void)
 
 			for (auto pModel : models)
 			{
-				if (pModel->isEM())
-				{
-					renderer.drawEM(*pModel, viewMatrix, *pModel->getShaderPointer(), skybox, lightSource);
-				}
-				else
-					renderer.drawModel(*pModel, viewMatrix, *pModel->getShaderPointer(), lightSource);
-				
+				//renderer.drawModel(*pModel, viewMatrix, glassShader, lightSource);
+				renderer.drawEM(*pModel, viewMatrix, glassShader, skybox);
 			}
 				
 

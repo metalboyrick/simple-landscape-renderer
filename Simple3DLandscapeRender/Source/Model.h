@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "Texture.h"
-#include "ShaderProgram.h"
 #include <glm/glm.hpp>
 
 class Model
@@ -21,15 +20,9 @@ private:
 	glm::mat4 m_translation;
 	glm::vec3 m_trInfo;
 
-	bool m_isEM;
-	ShaderProgram* m_shader;
-
 public:
-
-	
-
-	Model(const std::string& p_name, ShaderProgram* p_shader, bool p_isEM);
-	Model(const std::string& p_name, const std::string& p_filepath, ShaderProgram* p_shader, bool p_isEM);
+	Model(const std::string& p_name);
+	Model(const std::string& p_name, const std::string& p_filepath);
 	~Model();
 
 	inline unsigned int getId() const { return m_id; };
@@ -39,8 +32,6 @@ public:
 	inline glm::vec3 getRot() const { return m_rotInfo; };
 	inline glm::vec3 getTranslation() const { return m_trInfo; };
 	inline std::string getName() const { return m_name; };
-	inline bool isEM() const { return m_isEM; };
-	inline ShaderProgram* getShaderPointer() const { return m_shader; };
 
 	void bind() const;
 	void unbind() const;

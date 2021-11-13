@@ -78,7 +78,7 @@ void Renderer::drawSkybox(Skybox& p_skybox, glm::mat4 p_viewMatrix, ShaderProgra
 	glDepthFunc(GL_LESS);
 }
 
-void Renderer::drawEM(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Skybox& p_skybox, Light& p_light) const
+void Renderer::drawEM(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_shader, Skybox& p_skybox) const
 {
 	p_shader.start();
 
@@ -89,12 +89,6 @@ void Renderer::drawEM(Model& p_Model, glm::mat4 p_viewMatrix, ShaderProgram& p_s
 	p_shader.setUniformMatrix4fv("v_uni_model", false, glm::value_ptr(model));
 	p_shader.setUniformMatrix4fv("v_uni_view", false, glm::value_ptr(view));
 	p_shader.setUniformMatrix4fv("v_uni_projection", false, glm::value_ptr(projection));
-
-	glm::vec3 lightPos = p_light.position;
-	glm::vec3 lightColor = p_light.color;
-	p_shader.setUniform3fv("v_uni_lightPosition", glm::value_ptr(lightPos));
-	p_shader.setUniform3fv("f_uni_lightColor", glm::value_ptr(lightColor));
-	p_shader.setUniform1f("f_uni_ambient", 0.1f);
 
 	p_skybox.bind();
 	p_Model.bind();
